@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 class NotificationsScreen extends StatelessWidget {
   const NotificationsScreen({
     Key? key,
-    required this.notificationTitle,
-    required this.notificationBody,
+    this.notificationTitle,
+    this.notificationBody,
   }) : super(key: key);
   final String? notificationTitle, notificationBody;
 
@@ -13,24 +13,21 @@ class NotificationsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Notifications'),
+        title: const Text('Notifications'),
         centerTitle: true,
       ),
-      body: ListView.builder(
-        itemCount: 30,
+      body: notificationBody != null && notificationTitle != null? ListView.builder(
+        itemCount: 1,
         itemBuilder: (context, index) {
           return Padding(
             padding:
-                const EdgeInsets.only(left: 20, right: 30, top: 15, bottom: 10),
+            const EdgeInsets.only(left: 20, right: 30, top: 15, bottom: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomText(text: notificationTitle ?? 'Notification Title'),
+                CustomText(text: notificationTitle!),
                 CustomText(
-                  text: notificationBody ??
-                      'A text is a passage of words that conveys a set of meanings to the person who is'
-                      ' reading it. It\'s a body of written work, in various forms and structures, '
-                      'that can be words, phrases and sentences that piece together a passage of written work.',
+                  text: notificationBody!,
                   fontWeight: FontWeight.normal,
                   size: 15,
                 ),
@@ -38,7 +35,8 @@ class NotificationsScreen extends StatelessWidget {
             ),
           );
         },
-      ),
+      ):
+      const Center(child: CustomText(text: 'No notification',),),
     );
   }
 }
